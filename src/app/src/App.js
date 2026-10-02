@@ -1,28 +1,22 @@
 import './App.css';
-import logo from './logo.svg';
-
+import { TodoForm } from './components/TodoForm';
+import { TodoList } from './components/TodoList';
+import { useTodos } from './hooks/useTodos';
 
 export function App() {
+  const { todos, isLoading, error, refresh, addTodo } = useTodos();
+
   return (
-    <div className="App">
-      <div>
+    <main className="App">
+      <section>
         <h1>List of TODOs</h1>
-        <li>Learn Docker</li>
-        <li>Learn React</li>
-      </div>
-      <div>
+        <TodoList todos={todos} isLoading={isLoading} error={error} onRetry={refresh} />
+      </section>
+      <section>
         <h1>Create a ToDo</h1>
-        <form>
-          <div>
-            <label for="todo">ToDo: </label>
-            <input type="text" />
-          </div>
-          <div style={{"marginTop": "5px"}}>
-            <button>Add ToDo!</button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <TodoForm onSubmit={addTodo} />
+      </section>
+    </main>
   );
 }
 

@@ -11,9 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
 import sys, os
-from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,9 +28,6 @@ ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
-# Admin, sessions and messages are removed: they need a relational DB, and this
-# project stores everything in MongoDB. auth + contenttypes stay because DRF
-# imports AnonymousUser from django.contrib.auth.
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,15 +65,13 @@ WSGI_APPLICATION = 'rest.wsgi.application'
 
 
 # Database
-# The project persists all data in MongoDB (see rest/mongo.py), so Django's
-# relational database layer is deliberately left unconfigured.
+# All data lives in MongoDB (rest/mongo.py); no relational database is used.
 DATABASES = {}
 
 MONGO = {
     'HOST': os.environ.get('MONGO_HOST', 'localhost'),
     'PORT': int(os.environ.get('MONGO_PORT', '27017')),
     'DB_NAME': os.environ.get('MONGO_DB_NAME', 'test_db'),
-    # Fail fast instead of hanging for pymongo's 30s default when Mongo is down.
     'SERVER_SELECTION_TIMEOUT_MS': int(os.environ.get('MONGO_TIMEOUT_MS', '3000')),
 }
 
@@ -107,13 +100,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
     'UNAUTHENTICATED_USER': None,
-    # Every API error goes through one place and comes out in the same JSON shape.
     'EXCEPTION_HANDLER': 'rest.exception_handler.api_exception_handler',
 }
 
 
-# Only the React dev server may call the API from a browser. Allowing every
-# origin together with credentials (the previous setting) is unsafe.
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS', 'http://localhost:3000'
 ).split(',')
@@ -128,7 +118,6 @@ LOGGING = {
     'handlers': {
         'console': {'class': 'logging.StreamHandler', 'formatter': 'simple'},
     },
-    # Only our own modules; Django already logs its own messages to the console.
     'loggers': {
         name: {'handlers': ['console'], 'level': os.environ.get('LOG_LEVEL', 'INFO'), 'propagate': False}
         for name in ('rest', 'todos')

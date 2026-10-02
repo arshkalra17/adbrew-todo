@@ -1,9 +1,3 @@
-"""Application-level exceptions shared across apps.
-
-Services raise these instead of building HTTP responses themselves, which
-keeps business logic independent of the web framework. The mapping from
-exception to HTTP status lives in one place: rest/exception_handler.py.
-"""
 from typing import Optional
 
 

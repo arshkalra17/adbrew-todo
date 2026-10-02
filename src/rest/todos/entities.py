@@ -1,8 +1,3 @@
-"""The Todo entity: what the rest of the code works with.
-
-It is a plain dataclass, not a Django model. Mongo-specific details such as
-ObjectId stay inside the repository, so views and services never see them.
-"""
 from dataclasses import dataclass
 from datetime import datetime
 

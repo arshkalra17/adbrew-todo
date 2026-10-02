@@ -13,12 +13,10 @@ async function readJson(response) {
   try {
     return await response.json();
   } catch {
-    return null; // Empty or non-JSON body, e.g. an HTML error page from a proxy.
+    return null;
   }
 }
 
-// One wrapper around fetch so that every call shares the same base URL, JSON
-// handling and error format. Components never call fetch directly.
 export async function request(path, { method = 'GET', body, signal } = {}) {
   const options = { method, signal, headers: { Accept: 'application/json' } };
   if (body !== undefined) {
@@ -31,7 +29,7 @@ export async function request(path, { method = 'GET', body, signal } = {}) {
     response = await fetch(`${API_BASE_URL}${path}`, options);
   } catch (error) {
     if (error.name === 'AbortError') {
-      throw error; // The caller cancelled on purpose; not a failure to report.
+      throw error;
     }
     throw new ApiError('Could not reach the server. Please check that the API is running.');
   }

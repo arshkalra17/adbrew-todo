@@ -1,6 +1,4 @@
 export function TodoList({ todos, isLoading, error, onRetry }) {
-  // Only show the full loading message on the first load. On later refreshes
-  // the current list stays visible instead of flashing empty.
   if (isLoading && todos.length === 0) {
     return <p className="muted">Loading TODOs…</p>;
   }

@@ -1,9 +1,3 @@
-"""HTTP layer for todos.
-
-Views only translate between HTTP and the service: read the request, call
-the service, shape the response. Validation lives in the service, and error
-responses are produced centrally by rest/exception_handler.py.
-"""
 from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
@@ -18,7 +12,6 @@ class TodoListView(APIView):
     parser_classes = [JSONParser]
 
     def get_service(self) -> TodoService:
-        # A separate method so tests can substitute a service backed by fake storage.
         return get_todo_service()
 
     def get(self, request):

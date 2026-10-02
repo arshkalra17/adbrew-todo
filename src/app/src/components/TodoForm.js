@@ -2,9 +2,6 @@ import { useState } from 'react';
 
 import { MAX_DESCRIPTION_LENGTH } from '../config';
 
-// Knows nothing about the API: it hands the description to `onSubmit` and
-// shows whatever error that promise rejects with. This keeps it reusable and
-// easy to test.
 export function TodoForm({ onSubmit }) {
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,7 +21,7 @@ export function TodoForm({ onSubmit }) {
       await onSubmit(trimmed);
       setDescription('');
     } catch (err) {
-      setError(err.message); // Keep the typed text so the user can retry.
+      setError(err.message);
     } finally {
       setIsSubmitting(false);
     }

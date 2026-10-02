@@ -1,9 +1,3 @@
-"""Business rules for todos.
-
-The service knows nothing about HTTP or MongoDB. It receives its repository
-and clock from outside (dependency injection), which is what makes it easy
-to unit test and to reuse, for example from a management command.
-"""
 from datetime import datetime, timezone
 from typing import Any, Callable, List
 

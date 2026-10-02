@@ -22,8 +22,6 @@ services:
       - ${ADBREW_CODEBASE_PATH}:/src
 
   mongo:
-    # Official image: multi-arch (works on Intel and Apple Silicon) and does
-    # not need the app image to carry a database server.
     image: mongo:4.4
     container_name: mongo
     restart: always

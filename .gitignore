@@ -1,0 +1,12 @@
+# Runtime data written by the Docker volumes (see docker-compose.yml)
+src/db/
+src/tmp/
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

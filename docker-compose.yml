@@ -22,13 +22,15 @@ services:
       - ${ADBREW_CODEBASE_PATH}:/src
 
   mongo:
-    build: .
+    # Official image: multi-arch (works on Intel and Apple Silicon) and does
+    # not need the app image to carry a database server.
+    image: mongo:4.4
     container_name: mongo
     restart: always
     ports:
       - "27017:27017"
     volumes:
       - ${ADBREW_CODEBASE_PATH}/db/:/data/db
-    command: /usr/bin/mongod --bind_ip 0.0.0.0
+    command: mongod --bind_ip_all
 
     
